@@ -30,73 +30,125 @@ fluidPage(
     conditionalPanel("input.tipo_coordenadas_origen == 'gms'",
                      strong("Longitud"),
                      fluidRow(
-                       column(2,
-                              numericInput("longitud_gms_grados",
-                                           label = NULL,
-                                           value = 99,
-                                           min = 0,
-                                           max = 180)),
-                       column(1, "°"),
-                       column(2,
-                              numericInput("longitud_gms_minutos",
-                                           label = NULL,
-                                           value = 13,
-                                           min = 0,
-                                           max = 60)),
-                       column(1, "'"),
-                       column(2,
-                              numericInput("longitud_gms_segundos",
-                                           label = NULL,
-                                           value = 17,
-                                           min = 0,
-                                           max = 60)),
-                       column(1, "\""),
-                       column(2,
-                              radioButtons("longitud_gms_rumbo",
-                                           label = NULL,
-                                           choiceNames = c("O", "E"),
-                                           choiceValues = c("W", "E"),
-                                           inline = TRUE))
+                       column(3,
+                              autonumericInput("longitud_gms_grados",
+                                               label = NULL,
+                                               value = 99,
+                                               currencySymbol = "°",
+                                               currencySymbolPlacement = "s",
+                                               decimalPlaces = 0,
+                                               minimumValue = 0,
+                                               maximumValue = 180)),
+                       column(3,
+                              autonumericInput("longitud_gms_minutos",
+                                               label = NULL,
+                                               value = 13,
+                                               currencySymbol = "'",
+                                               currencySymbolPlacement = "s",
+                                               decimalPlaces = 0,
+                                               minimumValue = 0,
+                                               maximumValue = 60)),
+                       column(3,
+                              autonumericInput("longitud_gms_segundos",
+                                               label = NULL,
+                                               value = 17,
+                                               currencySymbol = '"',
+                                               currencySymbolPlacement = "s",
+                                               decimalPlaces = 2,
+                                               min = 0,
+                                               max = 60)),
+                       column(3,
+                              selectInput("longitud_gms_rumbo",
+                                          label = NULL,
+                                          choices = list("O/W" = "W",
+                                                         "E" = "E"))
+                       )
                      ),
                      strong("Latitud"),
                      fluidRow(
-                       column(2,
-                              numericInput("latitud_gms_grados",
-                                           label = NULL,
-                                           value = 19,
-                                           min = 0,
-                                           max = 90)),
-                       column(1, "°"),
-                       column(2,
-                              numericInput("latitud_gms_minutos",
-                                           label = NULL,
-                                           value = 17,
-                                           min = 0,
-                                           max = 60)),
-                       column(1, "'"),
-                       column(2,
-                              numericInput("latitud_gms_segundos",
-                                           label = NULL,
-                                           value = 30,
-                                           min = 0,
-                                           max = 60)),
-                       column(1, "\""),
-                       column(2,
-                              radioButtons("latitud_gms_rumbo",
-                                           label = NULL,
-                                           choices = c("N", "S"),
-                                           inline = TRUE))
+                       column(3,
+                              autonumericInput("latitud_gms_grados",
+                                               label = NULL,
+                                               value = 19,
+                                               currencySymbol = "°",
+                                               currencySymbolPlacement = "s",
+                                               decimalPlaces = 0,
+                                               minimumValue = 0,
+                                               maximumValue = 90)),
+                       column(3,
+                              autonumericInput("latitud_gms_minutos",
+                                               label = NULL,
+                                               value = 17,
+                                               currencySymbol = "'",
+                                               currencySymbolPlacement = "s",
+                                               decimalPlaces = 0,
+                                               min = 0,
+                                               max = 60)),
+                       column(3,
+                              autonumericInput("latitud_gms_segundos",
+                                               label = NULL,
+                                               value = 30,
+                                               currencySymbol = '"',
+                                               currencySymbolPlacement = "s",
+                                               decimalPlaces = 2,
+                                               minimumValue = 0,
+                                               maximumValue = 60)),
+                       column(3,
+                              selectInput("latitud_gms_rumbo",
+                                          label = NULL,
+                                          choices = c("N", "S"))
+                       )
                      )
                      
     ),
     
     # Panel para entrada de coordenadas en grados decimales
+    # 19.2916666666667, -99.2213888888889
     conditionalPanel("input.tipo_coordenadas_origen == 'gd'",
-                     "Selector de coordenadas GD"),
+                     fluidRow(
+                       column(6,
+                              autonumericInput("longitud_gd",
+                                               label = "Longitud",
+                                               value = -99.22139,
+                                               decimalPlaces = 5,
+                                               minimumValue = -180,
+                                               maximumValue = 180)),
+                       column(6,
+                              autonumericInput("latitud_gd",
+                                               label = "Latitud",
+                                               value = -19.29167,
+                                               decimalPlaces = 5,
+                                               minimumValue = -90,
+                                               maximumValue = 90))
+                     )
+    ),
     
     # Panel para entrada de coordenadas proyectadas en UTM
     conditionalPanel("input.tipo_coordenadas_origen == 'utm'",
-                     "Selector de coordenadas UTM")
+                     fluidRow(
+                       column(4, 
+                              autonumericInput("x_utm",
+                                               label = "X",
+                                               value = 445000,
+                                               currencySymbol = "m",
+                                               currencySymbolPlacement = "s",
+                                               decimalPlaces = 2,
+                                               minimumValue = 0)),
+                       column(4, 
+                              autonumericInput("y_utm",
+                                               label = "Y",
+                                               value = 445000,
+                                               currencySymbol = "m",
+                                               currencySymbolPlacement = "s",
+                                               decimalPlaces = 2,
+                                               minimumValue = 0)),
+                       column(4, 
+                              selectInput("zona_utm",
+                                          label = "Zona",
+                                          choices = c("13N", "14N"))
+                       )
+                     )
+    )
     
   ),
   
@@ -104,6 +156,8 @@ fluidPage(
     
     ### Selector del tipo de notación de las coordenadas de salida --------------
     uiOutput("tipo_coordenadas_salida"),
+    
+    verbatimTextOutput("salida"),
     
     # Panel para salida de coordenadas en grados-minutos-segundos
     conditionalPanel("input.tipo_coordenadas_salida == 'gms'",
@@ -117,22 +171,14 @@ fluidPage(
     conditionalPanel("input.tipo_coordenadas_salida == 'utm'",
                      "Coordenadas UTM")
     
+  ),
+  
+  wellPanel(
+    
+    strong("Ubicación de la coordenada"),
+    p(),
+    leafletOutput("mapa_coordenada")
+    
   )
   
-  # Sidebar with a slider input for number of bins
-  # sidebarLayout(
-  #   sidebarPanel(
-  #   ),
-  #   
-  #   # Show a plot of the generated distribution
-  #   mainPanel(
-  #     h2("Coordenadas grados-minutos-segundos (GMS)"),
-  
-  #     hr(),
-  #     verbatimTextOutput("salida"),
-  #     hr(),
-  #     leafletOutput("mapa_coordenada")
-  #     
-  #   )
-  # )
 )
