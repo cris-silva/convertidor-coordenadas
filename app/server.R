@@ -8,10 +8,6 @@
 #
 
 library(shiny)
-library(tidyverse)
-library(sp)
-library(sf)
-library(leaflet)
 
 # Define server logic required to draw a histogram
 function(input, output, session) {
@@ -38,6 +34,18 @@ function(input, output, session) {
                   input$latitud_gms_segundos,
                   input$latitud_gms_rumbo)
   )
+  
+  
+  output$tipo_coordenadas_salida <- renderUI({
+    
+    opciones_salida <- opciones_notacion[!opciones_notacion == input$tipo_coordenadas_origen]
+    
+    radioButtons("tipo_coordenadas_salida",
+                 label = "Notación de las coordenadas deseadas",
+                 choices = opciones_salida,
+                 inline = TRUE)
+    
+  })
   
   output$mapa_coordenada <- renderLeaflet(
     
